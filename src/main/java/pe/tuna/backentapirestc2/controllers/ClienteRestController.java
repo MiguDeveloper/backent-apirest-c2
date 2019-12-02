@@ -84,11 +84,20 @@ public class ClienteRestController {
     }
 
     @PutMapping("/clientes/{id}")
-    public ResponseEntity<?> update(@RequestBody Cliente cliente, @PathVariable(name = "id") Long id) {
+    public ResponseEntity<?> update(@Valid @RequestBody Cliente cliente, BindingResult result, @PathVariable(name = "id") Long id) {
 
         Cliente clienteCurrent = clienteService.findById(id);
         Cliente clienteActualizado = null;
         Map<String, Object> response = new HashMap<>();
+
+        if (result.hasErrors()){
+            List<String> errors = result.getFieldErrors()
+                    .stream()
+                    .map(err -> "El campo '" + err.getField() + "' " + err.getDefaultMessage())
+                    .collect(Collectors.toList());
+            response.put("errors", errors);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+        }
 
         if (clienteCurrent == null) {
             response.put("error", "El cliente que intenta modificar no existe en la base de datos");
