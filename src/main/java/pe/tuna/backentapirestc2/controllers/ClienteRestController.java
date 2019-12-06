@@ -1,5 +1,7 @@
 package pe.tuna.backentapirestc2.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -30,6 +32,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api")
 public class ClienteRestController {
+
+    private static final Logger logger = LoggerFactory.getLogger(ClienteRestController.class);
 
     @Autowired
     private IClienteService clienteService;
@@ -180,6 +184,7 @@ public class ClienteRestController {
             String nombreArchivo = UUID.randomUUID().toString() + "_" + archivo.getOriginalFilename().replace(" ", "");
             Path rutaArchivo = Paths.get("uploads").resolve(nombreArchivo).toAbsolutePath();
 
+            logger.info(rutaArchivo.toString());
             try {
                 Files.copy(archivo.getInputStream(), rutaArchivo);
             } catch (IOException e) {
@@ -212,6 +217,8 @@ public class ClienteRestController {
     @GetMapping("/uploads/img/{nombreFoto:.+}")
     public ResponseEntity<Resource> verFoto(@PathVariable String nombreFoto){
         Path rutaArchivo = Paths.get("uploads").resolve(nombreFoto).toAbsolutePath();
+
+        logger.info(rutaArchivo.toString());
 
         Resource recurso = null;
 
