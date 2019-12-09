@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pe.tuna.backentapirestc2.models.intetity.Cliente;
+import pe.tuna.backentapirestc2.models.intetity.Region;
 import pe.tuna.backentapirestc2.models.repository.IClienteRepository;
 import pe.tuna.backentapirestc2.models.services.IClienteService;
 
@@ -45,5 +46,11 @@ public class ClienteServiceImpl implements IClienteService {
     @Transactional
     public void delete(Long id) {
         clienteRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Region> findAllRegiones() {
+        return clienteRepository.findAllRegiones();
     }
 }

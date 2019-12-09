@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pe.tuna.backentapirestc2.models.intetity.Cliente;
+import pe.tuna.backentapirestc2.models.intetity.Region;
 import pe.tuna.backentapirestc2.models.services.IClienteService;
 import pe.tuna.backentapirestc2.models.services.IUploadFileService;
 
@@ -127,6 +128,7 @@ public class ClienteRestController {
             clienteCurrent.setApellido(cliente.getApellido());
             clienteCurrent.setEmail(cliente.getEmail());
             clienteCurrent.setCreateAt(new Date());
+            clienteCurrent.setRegion(cliente.getRegion());
             clienteActualizado = clienteService.save(clienteCurrent);
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al actualizar cliente");
@@ -212,5 +214,10 @@ public class ClienteRestController {
         cabecera.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"");
 
         return new ResponseEntity<Resource>(recurso, cabecera, HttpStatus.OK);
+    }
+
+    @GetMapping("/clientes/regiones")
+    public List<Region> listarRegiones(){
+        return clienteService.findAllRegiones();
     }
 }
