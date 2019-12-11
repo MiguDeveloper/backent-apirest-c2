@@ -37,6 +37,7 @@ public class ClienteRestController {
     @Autowired
     private IUploadFileService uploadFileService;
 
+    // DATO: Si hemos habilitado la seguridad por anotaciones las rutas publicas no seran anotadas
     @GetMapping("/clientes")
     public List<Cliente> findAll() {
         return clienteService.findAll();
@@ -48,6 +49,8 @@ public class ClienteRestController {
         return clienteService.findAll(pageable);
     }
 
+    // Los metodos que necesitan permiso se debe especificar el prefijo ROLE_
+    // @Secure({"ROLE_ADMIN","ROLE_USER"})
     @GetMapping("/clientes/{id}")
     public ResponseEntity<?> findById(@PathVariable(name = "id") Long id) {
 

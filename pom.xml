@@ -50,6 +50,19 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- Dependencia necesaria para implementa sercuridad en nuestra app: spring-security-oauth2 -->
+        <dependency>
+            <groupId>org.springframework.security.oauth</groupId>
+            <artifactId>spring-security-oauth2</artifactId>
+            <version>2.4.0.RELEASE</version>
+        </dependency>
+        <!-- Dependencia necesaria para implementa sercuridad en nuestra app: spring-security-jwt -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-jwt</artifactId>
+            <version>1.1.0.RELEASE</version>
+        </dependency>
+
     </dependencies>
 
     <build>
